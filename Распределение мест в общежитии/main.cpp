@@ -15,19 +15,16 @@ struct student {
 		unsigned int secondIncome = 0;
 		unsigned int netIncome = 0;
 		bool flag = false;
-	}income;
-		
+	}income;		
 };
 
 enum menu { setllement_of_students = 1, sharing_of_student, pop_element, edit_element, sort_element, output_element, search_info, input_data_in_file, output_data_from_file, close_program = 0};
 enum deleteAction {deletee_element = 1, leave_element};  // подумать над названием 
 
 
-void inputStudentList(bool * , int &, student *&, short int, unsigned int); //добавление данных в массив (сделано)
+void settlementOfStudent(student*& pMassive, bool* , int*, unsigned int); // добавление студентов (заселение)
 
-void settlementOfStudent(student*& pMassive, bool* , int&, unsigned int);
-
-void sharingOfStudent(student*& pMassive, bool*, int&, unsigned int);
+void sharingOfStudent(student*& pMassive, bool*, int*, unsigned int); // добавление студентов (подселение)
 
 void deleteStudentElement(int& , student*&, string); // удаление элементов массива (сделано)
 
@@ -39,9 +36,9 @@ void outputStudentList(student *, int, unsigned int); //просмотр списка (сделана
 
 void searchStudentInfo(int, student *); // поиск информации о студенте (сделано)
 
-void inputDataInFile(student*, int);
+void inputDataInFile(student*, int); 
 
-void outputDataFromFile(student *&, int&, bool *);
+void outputDataFromFile(student *&, int*, bool *);
 
 int main() {
 	setlocale(0, "");
@@ -78,11 +75,11 @@ int main() {
 		switch (choiseOfAction)
 		{
 			case menu::setllement_of_students:
-				settlementOfStudent(pMassive, &conditionOfMassive, amountOfStudent, minimalSalary);
+				settlementOfStudent(pMassive, &conditionOfMassive, &amountOfStudent, minimalSalary);
 				break;
 
 			case menu::sharing_of_student:
-				sharingOfStudent(pMassive, &conditionOfMassive, amountOfStudent, minimalSalary);
+				sharingOfStudent(pMassive, &conditionOfMassive, &amountOfStudent, minimalSalary);
 				break;
 
 			case menu::pop_element:
@@ -117,7 +114,7 @@ int main() {
 				break;
 
 			case menu::output_data_from_file:
-				outputDataFromFile(pMassive, amountOfStudent, &conditionOfMassive);
+				outputDataFromFile(pMassive, &amountOfStudent, &conditionOfMassive);
 				break;
 
 			case menu::close_program:
@@ -127,7 +124,7 @@ int main() {
 	}
 }
 
-void settlementOfStudent(student*& pMassive, bool* pCondition, int& size, unsigned int minimalSalary) {
+void settlementOfStudent(student*& pMassive, bool* pCondition, int* size, unsigned int minimalSalary) {
 	int amountOfStudent = 0;
 
 	if (*pCondition == true) {
@@ -137,11 +134,11 @@ void settlementOfStudent(student*& pMassive, bool* pCondition, int& size, unsign
 
 	cout << "\nСколько студентов вы хотите заселить?\n" << "Количество: ";
 	cin >> amountOfStudent;
-	size = amountOfStudent;
+	*size = amountOfStudent;
 
-	pMassive = new student[size];  // создаем динамический массив на кол-во элементов, которое укажет пользователь
+	pMassive = new student[*size];  // создаем динамический массив на кол-во элементов, которое укажет пользователь
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < *size; i++) {
 		cin.ignore();
 		cout << "\nВведите имя студента: ";
 		cin.getline(pMassive[i].studentName, 30);
@@ -165,21 +162,21 @@ void settlementOfStudent(student*& pMassive, bool* pCondition, int& size, unsign
 
 	*pCondition = true;
 }
-void sharingOfStudent(student*& pMassive, bool* pCondition, int& size, unsigned int minimalSalary) {
+void sharingOfStudent(student*& pMassive, bool* pCondition, int* size, unsigned int minimalSalary) {
 
 	if (*pCondition == false) {
 		cout << "\nПодселение невозможно, так как заселение еще не прошло" << endl;
 		return;
 	}
-
-	size++;
+	else (*size)++;
+	
 	student info;
-	student* newMassive = new student[size];
+	student* newMassive = new student[*size];
 
-	for (int i = 0; i < size - 1; i++) newMassive[i] = pMassive[i]; // перезаписываем данные из старого массива в новый
+	for (int i = 0; i < *size - 1; i++) newMassive[i] = pMassive[i]; // перезаписываем данные из старого массива в новый
 
 	cin.ignore();
-	cout << "Введите имя студента: ";
+	cout << "\nВведите имя студента: ";
 	cin.getline(info.studentName, 30);
 
 	cout << "Введите номер группы студента: ";
@@ -198,7 +195,7 @@ void sharingOfStudent(student*& pMassive, bool* pCondition, int& size, unsigned 
 	info.income.netIncome = (info.income.firstIncome + info.income.secondIncome) / 2;
 	if (info.income.netIncome < minimalSalary) info.income.flag = true;
 
-	newMassive[size - 1] = info;
+	newMassive[*size - 1] = info;
 
 	delete[] pMassive;
 
@@ -396,7 +393,7 @@ void inputDataInFile(student *pMassive, int size){
 
 	binaryFile.close();
 }
-void outputDataFromFile(student *&pMassive, int &size, bool *conditionalOfMassive) {
+void outputDataFromFile(student *&pMassive, int *size, bool *conditionalOfMassive) {
 
 	const char* PATH = "D:\\C++\\Structers of student\\file.dat";
 
@@ -414,16 +411,15 @@ void outputDataFromFile(student *&pMassive, int &size, bool *conditionalOfMassiv
 		return;
 	}
 
-	size = 10;
-	pMassive = new student[size];
+	*size = 10;
+	pMassive = new student[*size];
 	
 
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < *size; i++) {
 		file.read((char*)&pMassive[i], sizeof(student));
 	}
 
 	cout << "Чтение из файла прошло успешно" << endl;
 
 	file.close();
-
 }
