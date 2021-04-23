@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Распределение мест в общежитии", "Распределение мест в общежитии\Распределение мест в общежитии.vcxproj", "{28BD2D3D-A1F1-4302-A2DF-5A6F511CFE5F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Распределение мест в общежитии 2.0", "Распределение мест в общежитии 2.0\Распределение мест в общежитии 2.0.vcxproj", "{A9D15363-463D-49AA-9B6F-F504A204C5A9}"
 EndProject
 Global
@@ -25,14 +23,6 @@ Global
 		{28BD2D3D-A1F1-4302-A2DF-5A6F511CFE5F}.Release|x64.Build.0 = Release|x64
 		{28BD2D3D-A1F1-4302-A2DF-5A6F511CFE5F}.Release|x86.ActiveCfg = Release|Win32
 		{28BD2D3D-A1F1-4302-A2DF-5A6F511CFE5F}.Release|x86.Build.0 = Release|Win32
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Debug|x64.ActiveCfg = Debug|x64
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Debug|x64.Build.0 = Debug|x64
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Debug|x86.ActiveCfg = Debug|Win32
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Debug|x86.Build.0 = Debug|Win32
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Release|x64.ActiveCfg = Release|x64
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Release|x64.Build.0 = Release|x64
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Release|x86.ActiveCfg = Release|Win32
-		{D8F1ACE5-5B81-4CAF-B194-A2F3BECFC501}.Release|x86.Build.0 = Release|Win32
 		{A9D15363-463D-49AA-9B6F-F504A204C5A9}.Debug|x64.ActiveCfg = Debug|x64
 		{A9D15363-463D-49AA-9B6F-F504A204C5A9}.Debug|x64.Build.0 = Debug|x64
 		{A9D15363-463D-49AA-9B6F-F504A204C5A9}.Debug|x86.ActiveCfg = Debug|Win32
