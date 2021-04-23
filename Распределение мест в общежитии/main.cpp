@@ -2,24 +2,25 @@
 #include<fstream>
 #include<Windows.h>
 
+
 using namespace std;
 
 struct student {
-	char studentName[30] = {'\0'};
+	char studentName[30] = { '\0' };
 	short int socialActivity = 0;
-	char groupNumber[20] = {'\0'};
+	char groupNumber[20] = { '\0' };
 	double averageScore = 0;
 
 	struct familyIncome {
-		unsigned int firstIncome = 0;
-		unsigned int secondIncome = 0;
-		unsigned int netIncome = 0;
+		double firstIncome = 0;
+		double secondIncome = 0;
+		double netIncome = 0;
 		bool flag = false;
-	}income;		
+	}income;
 };
 
-enum menu { setllement_of_students = 1, sharing_of_student, pop_element, edit_element, sort_element, output_element, search_info, input_data_in_file, output_data_from_file, close_program = 0};
-enum deleteAction {deletee_element = 1, leave_element};  // подумать над названием 
+enum menu { setllement_of_students = 1, sharing_of_student, pop_element, edit_element, sort_element, output_element, search_info, input_data_in_file, output_data_from_file, close_program = 0 };
+enum deleteAction { deletee_element = 1, leave_element };  // подумать над названием 
 
 
 void settlementOfStudent(student*& pMassive, bool* , int*, unsigned int); // добавление студентов (заселение)
@@ -36,9 +37,9 @@ void outputStudentList(student *, int, unsigned int); //просмотр списка (сделана
 
 void searchStudentInfo(int, student *); // поиск информации о студенте (сделано)
 
-void inputDataInFile(student*, int); 
+void inputDataInFile(student*, int);  // запись данных в массив
 
-void outputDataFromFile(student *&, int*, bool *);
+void outputDataFromFile(student *&, int*, bool *); // вывод данных из файла
 
 int main() {
 	setlocale(0, "");
@@ -197,7 +198,7 @@ void sharingOfStudent(student*& pMassive, bool* pCondition, int* size, unsigned 
 
 	newMassive[*size - 1] = info;
 
-	delete[] pMassive;
+	delete[] pMassive;  // удаляем старый динамический массив
 
 	pMassive = newMassive;
 
@@ -262,7 +263,7 @@ void editStudentElement(int size, student *&pMassive) {
 
 			while (running) {
 
-				int income = 0;
+				double income = 0;
 
 				cout << "\n{1} - Имя\n" << "{2} - Номер Группы\n" << "{3} - Занятие социальными работами\n";
 				cout << "{4} - Средний балл\n" << "{5} - Доход первого члена семьи\n" << "{6} - Доход второго члена семьи\n" << "{7} - Закончить редактирование" << endl;
@@ -280,7 +281,7 @@ void editStudentElement(int size, student *&pMassive) {
 					cin >> pMassive[i].groupNumber;
 					break;
 				case 3:
-					cout << "Занятие социальными работами (Да или Нет): ";
+					cout << "Занятие социальными работами ({1} - Да, {2} - Нет): ";
 					cin >> pMassive[i].socialActivity;
 					break;
 				case 4:
@@ -327,30 +328,33 @@ void sortStudentList(int size, student *&pMassive, unsigned int minimalSalary) {
 		}
 	}
 
-	cout << "\nСортировка данных завершена" << endl;
+	cout << "\nСортировка данных завершена";
 }
 void outputStudentList(student * pMassive, int size, unsigned int minimalSalary){
 
-	if (size == 0) cout << "\nСписок студентов пуст" << endl;
+	string socialActivity = "";
 
-	if (pMassive == NULL) {
-		cout << "\nЗаселение студентов еще не прошло" << endl;
+	if (size == 0) {
+		cout << "\nСписок студентов пуст" << endl;
 		return;
 	}
 
 	for (int i = 0; i < size; i++) {
+		if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
+		else socialActivity = "Не участвовал";
 
 		cout << "\nИмя студента: " << pMassive[i].studentName << endl;
 		cout << "Номер группы: " << pMassive[i].groupNumber << endl;
 		cout << "Средний балл: " << pMassive[i].averageScore << endl;
-		cout << "Участиве в общественной деятельности: " << pMassive[i].socialActivity << endl;
+		cout << "Участиве в общественной деятельности: " << socialActivity << endl;
 		cout << "Доход на члена семьи: " << pMassive[i].income.netIncome << endl;
-		cout << "Минимальная заработная плата: " << minimalSalary << "\n" << endl;
+		cout << "Минимальная заработная плата: " << minimalSalary << endl;
 	}
 }
 void searchStudentInfo(int size, student *pMassive) {
 
 	string name = "";
+	string socialActivity = "";
 
 	cout << "\nВведите имя студента" << endl;
 	cout << "Имя: ";
@@ -362,11 +366,15 @@ void searchStudentInfo(int size, student *pMassive) {
 	for (int i = 0; i < size; i++)
 	{
 		if (name == pMassive[i].studentName) {
+
+			if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
+			else socialActivity = "Не участвовал";
+
 			cout << "\nИмя студента: " << pMassive[i].studentName << endl;
 			cout << "Номер группы: " << pMassive[i].groupNumber << endl;
 			cout << "Средний балл: " << pMassive[i].averageScore << endl;
-			cout << "Участиве в общественной деятельности: " << pMassive[i].socialActivity << endl;
-			cout << "Доход на члена семьи: " << pMassive[i].income.netIncome << "\n" << endl;
+			cout << "Участиве в общественной деятельности: " << socialActivity << endl;
+			cout << "Доход на члена семьи: " << pMassive[i].income.netIncome <<endl;
 		}
 		else if (i == size - 1) cout << "Студента(ов) с таким именем нет в списке" << endl;
 	}
