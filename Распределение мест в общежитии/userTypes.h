@@ -16,3 +16,4 @@ struct student {
 
 enum menu { setllement_of_students = 1, sharing_of_student, pop_element, edit_element, sort_element, output_element, search_info, input_data_in_file, output_data_from_file, close_program = 0 };
 enum deleteAction { deletee_element = 1, leave_element };  // подумать над названием 
+enum menuPointSelection {edit_mode = 1, processing_mode, file_mode };

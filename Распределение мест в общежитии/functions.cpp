@@ -236,6 +236,7 @@ void searchStudentInfo(int size, student* pMassive) {
 
 	string name = "";
 	string socialActivity = "";
+	unsigned short int countOfStudent = 0;
 
 	cout << "\nВведите имя студента" << endl;
 	cout << "Имя: ";
@@ -256,16 +257,15 @@ void searchStudentInfo(int size, student* pMassive) {
 			cout << "Средний балл: " << pMassive[i].averageScore << endl;
 			cout << "Участиве в общественной деятельности: " << socialActivity << endl;
 			cout << "Доход на члена семьи: " << pMassive[i].income.netIncome << endl;
+			countOfStudent++;
 		}
-		else if (i == size - 1) cout << "Студента(ов) с таким именем нет в списке" << endl;
+		else if (i == size - 1 and countOfStudent == 0) cout << "Студента(ов) с таким именем нет в списке" << endl;
 	}
 }
 void inputDataInFile(student* pMassive, int size) {
 	student info;
 
-	const char* PATH = "D:\\C++\\Structers of student\\file.dat";
-
-	ofstream binaryFile(PATH, ios::binary);
+	ofstream binaryFile("D:\\C++\\Structers of student\\file.dat", ios::binary);
 
 	if (binaryFile.is_open()) cout << "\nФайл открыт\n";
 	else {
@@ -284,15 +284,13 @@ void inputDataInFile(student* pMassive, int size) {
 }
 void outputDataFromFile(student*& pMassive, int* size, bool* conditionalOfMassive) {
 
-	const char* PATH = "D:\\C++\\Structers of student\\file.dat";
-
 	if (*conditionalOfMassive == true) {
 		cout << "\nМассив студентов уже заполнен. Запись из файла невозможна" << endl;
 		return;
 	}
 	else *conditionalOfMassive = true;
 
-	ifstream file(PATH, ios::binary);
+	ifstream file("D:\\C++\\Structers of student\\file.dat", ios::binary);
 
 	if (file.is_open()) cout << "\nФайл открыт\n";
 	else {
@@ -312,3 +310,4 @@ void outputDataFromFile(student*& pMassive, int* size, bool* conditionalOfMassiv
 
 	file.close();
 }
+

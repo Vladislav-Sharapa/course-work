@@ -12,19 +12,17 @@ int main() {
 	//system("chcp 1251");
 
 	
-	int amountOfStudent = 0;
+	int amountOfStudent = 0; // начальное кол-во элементов массива
 	bool running = true;
 
 	student* pMassive = NULL; // предусмотреть ввод изначального кол-во студентов для заселения в main 
-
-	unsigned int minimumWage = 0;
 	unsigned short int choiseOfAction = 0;
 
 	bool conditionOfMassive = false;
 
 	unsigned int minimalSalary = 0;
 
-	cout << "Введите минимальную заработную плату\nВвод: ";
+	cout << "Для работы программы введите минимальную заработную плату\nВвод: ";
 	cin >> minimalSalary;
 
 
@@ -33,11 +31,12 @@ int main() {
 		cout << "----------------------";
 		cout << "\nМеню программы\n" << endl;
 		cout << "{1} - Заселение студентов\n" << "{2} - Подселение студентов\n" << "{3} - Удаление информации\n" << "{4} - Редактирование\n";
-		cout << "{5} - Сортировка информации\n" << "{6} - Вывод информации\n" << "{7} - Поиск ифнормации\n";
+		cout << "{5} - Сортировка информации\n" << "{6} - Вывод списка студентов\n" << "{7} - Поиск ифнормации о студенте\n";
 		cout<< "{8} - Записать данные в файл\n"<<"{9} - Записать данные из файла\n" << "{0} - Закрыть программу\n" << endl;
 		cout << "Действие: ";
 		cin >> choiseOfAction;
 		cout << "----------------------";
+	
 
 		switch (choiseOfAction)
 		{

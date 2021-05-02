@@ -6,11 +6,9 @@
 
 using namespace std;
 
-void inputStudentList(bool*, int&, student*&, short int, unsigned int); //добавление данных в массив (сделано)
+void settlementOfStudent(student*& pMassive, bool*, int*, unsigned int); // добавление элементов через цикл (заселение)
 
-void settlementOfStudent(student*& pMassive, bool*, int*, unsigned int);
-
-void sharingOfStudent(student*& pMassive, bool*, int*, unsigned int);
+void sharingOfStudent(student*& pMassive, bool*, int*, unsigned int); // добавление элементов по одному (подселение)
 
 void deleteStudentElement(int&, student*&, string); // удаление элементов массива (сделано)
 
@@ -24,5 +22,4 @@ void searchStudentInfo(int, student*); // поиск информации о студенте (сделано)
 
 void inputDataInFile(student*, int);  // запись в файл 
 
-void outputDataFromFile(student*&, int*, bool*); // чтение файла
-
+void outputDataFromFile(student*&, int*, bool*); // чтение из файла
