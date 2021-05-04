@@ -41,6 +41,8 @@ void sortStudentListByPriority(student*&);
 
 // функции поиска
 void searchStudentByName(student*);
+void searchStudentByGroup(student*);
+void searchStudentByAverageScore(student*);
 
 // добавление элемента в массив
 student inputInfoAboutStudent();
@@ -56,6 +58,14 @@ void editStudentElement(student*&, int);
 // функция удаления
 void deleteStudentElement(student*&, int);
 
+bool isNumberNumeric();
+int inputNumber(bool(*pFuction)(int));
+bool isNumberRangeCorrectForMenu(int);
+bool isNumberRangeCorrectForEditMenu(int);
+bool isNumberRangeCorrectForProccesingMenu(int);
+bool isNumberRangeCorrectForMark(int);
+bool trueFunction(int);
+
 int main() {
 	
 	setlocale(0, "");
@@ -65,11 +75,11 @@ int main() {
 	while (true) {
 
 		short int modeSelection = 0, choiceEditMode = 0, choiceProcessingMode = 0, choiceSearchMode = 0, choiceSortMode = 0;
+		system("cls");
 
 		formOfMainMenu();
-		cout << "Выбор: ";
-		cin >> modeSelection;
-
+		modeSelection = inputNumber(isNumberRangeCorrectForMenu);
+		
 		system("cls");
 
 		switch (modeSelection) 
@@ -81,6 +91,7 @@ int main() {
 				processingMenu(choiceProcessingMode, choiceSearchMode, choiceSortMode, pMassive);
 				break;
 			case modeOfProgram::close_program:
+				delete[]pMassive;
 				exit(0);
 		}
 	}
@@ -91,8 +102,8 @@ void editMenu(short int choice, student*& pMassive) {
 	int index = 0;
 
 	formOfEditMode();
-	cout << "Выбор: ";
-	cin >> choice;
+
+	choice = inputNumber(isNumberRangeCorrectForEditMenu);
 
 	system("cls");
 
@@ -106,6 +117,7 @@ void editMenu(short int choice, student*& pMassive) {
 			break;
 		case modeOfEditing::delete_student_structer:
 			outputDataInTable(pMassive);
+			if (MASSIVE_SIZE == 0) break;
 			index = getNumberOfStudent();
 			deleteStudentElement(pMassive, index);
 			break;
@@ -119,6 +131,7 @@ void editMenu(short int choice, student*& pMassive) {
 			getDataFromFile(pMassive);
 			break;
 		case modeOfEditing::record_data_in_file:
+			recordDatainFile(pMassive);
 			break;
 		case modeOfEditing::close_editing_menu:
 			system("cls");
@@ -131,9 +144,9 @@ void processingMenu(short int choiceProcessingMode, short int choiceSearchMode, 
 
 	short int choiseModeOfIndTask = 0;
 
-	formOfProcessingMenu();
-	cout << "Выбор: ";
-	cin >> choiceProcessingMode;
+	formOfProcessingMenu(); // вывод меню обработки
+	
+	choiceProcessingMode = inputNumber(isNumberRangeCorrectForProccesingMenu);
 
 	system("cls");
 
@@ -153,60 +166,84 @@ void processingMenu(short int choiceProcessingMode, short int choiceSearchMode, 
 	}
 }
 void searchMenu(short int choice, student*& pMassive) {
-	formOfSearchMenu();
-	cout << "Выбор: ";
-	cin >> choice;
+	bool running = true;
 
-	system("cls");
+	if (MASSIVE_SIZE <= 0) {
+		cout << "Поиск невозможен, так как список студентов пуст . . ." << endl;
+		system("pause");
+		return;
+	}
 
-	switch (choice)
-	{
+	while (running) {
+		formOfSearchMenu(); // вывод меню поиска
+
+		choice = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		system("cls");
+
+		switch (choice)
+		{
 		case modeOfSerching::search_by_name:
 			searchStudentByName(pMassive);
+			system("pause");
 			break;
 		case modeOfSerching::search_by_group:
+			searchStudentByGroup(pMassive);
+			system("pause");
 			break;
 		case modeOfSerching::search_by_average_number:
+			searchStudentByAverageScore(pMassive);
+			system("pause");
 			break;
 		case modeOfSerching::close_search_menu:
 			return;
+		}
+		system("cls");
 	}
 }
 void sortMenu(short int choice, student*& pMassive) {
+	bool running = true;
 
-	formOfSortingMenu();
-	cout << "Выбор: ";
-	cin >> choice;
+	if (MASSIVE_SIZE <= 0) {
+		cout << "Сортировка невозможна, так как список студентов пуст . . ." << endl;
+		system("pause");
+		return;
+	}
 
-	system("cls");
-	switch (choice)
-	{
+	while (running) {
+
+		formOfSortingMenu(); // вывод меню сортировки
+		
+		choice = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		system("cls");
+
+		switch (choice)
+		{
 		case modeOfSorting::sort_by_name:
 			sortStudentListByStudentName(pMassive);
 			outputDataInTable(pMassive);
+			system("pause");
 			break;
 		case modeOfSorting::sort_by_average_mark:
 			sortStudentListByAverageMark(pMassive);
 			outputDataInTable(pMassive);
+			system("pause");
 			break;
 		case modeOfSorting::sort_by_income:
 			sortStudentListByIncome(pMassive);
 			outputDataInTable(pMassive);
+			system("pause");
 			break;
 		case modeOfSorting::close_sort_menu:
-			return;
+			running = false;
+		}
+		system("cls");
 	}
-
-	system("pause");
-	system("cls");
 }
-
 void individualTaskMenu(short int choice, student*& pMassive) {
 
 	formOfMenuOfSettelment();
 
-	cout << "Выбор: ";
-	cin >> choice;
+	choice = inputNumber(isNumberRangeCorrectForMenu);
 
 	system("cls");
 
@@ -275,6 +312,7 @@ void recordDatainFile(student* pMassive) {
 	}
 	else {
 		for (int i = 0; i < MASSIVE_SIZE; i++) file.write((char*)&pMassive[i], sizeof(student));
+		cout << "Запись данных в файл прошла успешно . . ." << endl;
 	}
 
 }
@@ -367,16 +405,16 @@ void sortStudentListByPriority(student*& pMassive) {
 
 // функции поиска
 void searchStudentByName(student* pMassive) {
-
+	
 	vector<int>index;
 	char nameOfStudent[30] = {'\0'};
 	bool flag = false;
-	string socialActivity = "";
 
 	cout << "Введите имя студента: ";
 	cin.ignore();
 	cin.getline(nameOfStudent, 30);
 
+	// цикл для поиска индексов массива
 	for (int i = 0; i < MASSIVE_SIZE; i++) {
 		short int countOfSameLetters = 0;
 		for (int j = 0; j < 4; j++) {
@@ -395,6 +433,8 @@ void searchStudentByName(student* pMassive) {
 		cout << "+--------------------------------------------------------------------------+" << endl;
 		
 		for (int i = 0; i < index.size(); i++) {
+			string socialActivity = "";
+
 			if (pMassive[index[i]].socialActivity == 1) socialActivity = "Участвовал";
 			else socialActivity = "Не участвовал";
 
@@ -405,6 +445,79 @@ void searchStudentByName(student* pMassive) {
 		}
 	}
 
+}
+void searchStudentByGroup(student* pMassive) {
+
+	vector<int>index;
+	char groupNumber[30] = {'\0'};
+	bool flag = false;
+
+	cout << "Введите номер группы . . ." << endl;
+	cout << "Ввод: ";
+	cin.ignore();
+	cin.getline(groupNumber, 30);
+
+	for (int i = 0; i < MASSIVE_SIZE; i++) {
+		if (strcmp(groupNumber, pMassive[i].groupNumber) == 0) {
+			index.push_back(i);
+			flag = true;
+		}
+	}
+
+	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
+	else {
+		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "| Номер | Имя студента | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
+
+		for (int i = 0; i < index.size(); i++) {
+			string socialActivity = "";
+
+			if (pMassive[index[i]].socialActivity == 1) socialActivity = "Участвовал";
+			else socialActivity = "Не участвовал";
+
+			cout << "|" << setw(7) << i + 1 << "|" << setw(14) << pMassive[index[i]].studentName << "|";
+			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
+			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
+			cout << "+--------------------------------------------------------------------------+" << endl;
+		}
+	}
+
+}
+void searchStudentByAverageScore(student* pMassive) {
+
+	vector<int>index;
+	unsigned short int averageMarkOfStudent = 0;
+	bool flag = false;
+
+	cout << "Введите средний балл . . ." << endl;
+	
+	averageMarkOfStudent = inputNumber(isNumberRangeCorrectForMark); // проверка на правильность вводимых данных
+
+	for (int i = 0; i < MASSIVE_SIZE; i++) {
+		if (averageMarkOfStudent == pMassive[i].averageScore) {
+			index.push_back(i);
+			flag = true;
+		}
+	}
+	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
+	else {
+		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "| Номер | Имя студента | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
+
+		for (int i = 0; i < index.size(); i++) {
+			string socialActivity = "";
+
+			if (pMassive[index[i]].socialActivity == 1) socialActivity = "Участвовал";
+			else socialActivity = "Не участвовал";
+
+			cout << "|" << setw(7) << i + 1 << "|" << setw(14) << pMassive[index[i]].studentName << "|";
+			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
+			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
+			cout << "+--------------------------------------------------------------------------+" << endl;
+		}
+	}
 }
 
 // функции добавления студентов в список
@@ -433,6 +546,7 @@ student inputInfoAboutStudent() {
 
 	return info;
 }
+// функция добавления
 void addStudentInList(student*& pMassive) {  // подселение студентов
 
 	if (MASSIVE_SIZE == 0) {
@@ -456,28 +570,6 @@ void addStudentInList(student*& pMassive) {  // подселение студентов
 
 }
 
-// функции для нахождения студента по имени
-int findIndexOfStudentByName(student* pMassive) {
-
-	string nameOfStudent = "";
-	short int indexOfElement = 0;
-	cout << "Введите имя студента" << endl;
-	cout << "Имя: ";
-	cin >> nameOfStudent;
-
-	for (int i = 0; i < MASSIVE_SIZE; i++) {  // поиск нужного элемента в массиве (возможно добавление дополнительных параметров) 
-		indexOfElement++;
-		if (nameOfStudent == pMassive[i].studentName) return indexOfElement - 1;
-	}
-
-	if (indexOfElement == MASSIVE_SIZE and pMassive[indexOfElement - 1].studentName != nameOfStudent) { // проверка последнего элемента массива
-		cout << "Студент с заданными параметрами отсутcтвует" << endl;
-		return -1; // для остановки выполнения последующей функции
-	}
-
-	return 0;
-}
-
 int getNumberOfStudent() {
 
 	int choiseNumberOfStudent = 0;
@@ -485,10 +577,9 @@ int getNumberOfStudent() {
 
 	while (running) {
 		cout << "\nВыберите студента . . ." << endl;
-		cout << "Выбор: ";
-		cin >> choiseNumberOfStudent;
+		choiseNumberOfStudent = inputNumber(trueFunction);
 		
-		if (choiseNumberOfStudent <= 0 and choiseNumberOfStudent > MASSIVE_SIZE) cout << "Студента под таким номером нет в списке. Введите данны повторно . . ." << endl;
+		if (choiseNumberOfStudent <= 0 or choiseNumberOfStudent > MASSIVE_SIZE) cout << "Студента под таким номером нет в списке. Введите данны повторно . . ." << endl;
 		else running = false;
 	}
 	
@@ -552,7 +643,6 @@ void editStudentElement(student*& pMassive, int index) {
 void deleteStudentElement(student*& pMassive, int indexOfStudent) {
 
 	MASSIVE_SIZE--;
-
 	short int deleteAction = 0;
 	student* newMassive = new student[MASSIVE_SIZE];
 
@@ -579,4 +669,47 @@ void deleteStudentElement(student*& pMassive, int indexOfStudent) {
 void inputMinimalSalary() {
 	cout << "Минимальная заработная плата: ";
 	cin >> MINIMAL_SALARY;
+}
+
+int inputNumber(bool(*pFuction)(int))
+{
+	int number;
+	cout << "Ввод: ";
+	while (true)
+	{
+		cin >> number;
+
+		if (isNumberNumeric() && pFuction(number)) return number;
+		else cout << "Некорректный ввод! Повторите попытку: ";
+	}
+}
+bool isNumberNumeric()
+{
+	if (cin.get() == '\n')
+		return true;
+	else
+	{
+		cin.clear();
+		cin.ignore(256, '\n');
+		return false;
+	}
+}
+bool isNumberRangeCorrectForMenu(int number) {
+	if (number < 0 or number > 2) return false;
+	else return true;
+}
+bool isNumberRangeCorrectForEditMenu(int number) {
+	if (number < 0 or number > 6) return false;
+	else return true;
+}
+bool isNumberRangeCorrectForProccesingMenu(int number) {
+	if (number < 0 or number > 3) return false;
+	else return true;
+}
+bool isNumberRangeCorrectForMark(int number) {
+	if (number < 0 or number > 10) return false;
+	else return true;
+}
+bool trueFunction(int number) {
+	return true;
 }
