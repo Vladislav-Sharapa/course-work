@@ -190,27 +190,6 @@ void editStudentElement(int size, student*& pMassive) {
 		else if (countOfItereations == size) cout << "Такого студента нет в списке" << endl;
 	}
 }
-void sortStudentList(int size, student*& pMassive, unsigned int minimalSalary) {
-
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size - i - 1; j++) {
-
-			if (pMassive[j].averageScore < pMassive[j + 1].averageScore) swap(pMassive[j], pMassive[j + 1]);
-			else if (pMassive[j].averageScore == pMassive[j + 1].averageScore) {
-				if (pMassive[j].socialActivity == 2 and pMassive[j + 1].socialActivity == 1) swap(pMassive[j], pMassive[j + 1]);
-			}
-		}
-	}
-
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size - i - 1; j++) {
-
-			if (pMassive[j].income.flag == false and pMassive[j + 1].income.flag == true) swap(pMassive[j], pMassive[j + 1]);
-		}
-	}
-
-	cout << "\nСортировка данных завершена";
-}
 void outputStudentList(student* pMassive, int size, unsigned int minimalSalary) {
 
 	string socialActivity = "";
