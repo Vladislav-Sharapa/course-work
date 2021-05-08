@@ -139,13 +139,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="edit_function.cpp" />
+    <ClCompile Include="file_function.cpp" />
     <ClCompile Include="functions.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="form_of_menu.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="search_function.cpp" />
+    <ClCompile Include="security_functions.cpp" />
+    <ClCompile Include="sort_function.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="edit_function.h" />
+    <ClInclude Include="file_function.h" />
     <ClInclude Include="functions.h" />
+    <ClInclude Include="form_of_menu.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="search_function.h" />
+    <ClInclude Include="security_function.h" />
+    <ClInclude Include="sort_function.h" />
     <ClInclude Include="userTypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

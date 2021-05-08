@@ -1,106 +1,188 @@
 #include<iostream>
-#include"menu.h"
+
+#include"userTypes.h"
+#include"form_of_menu.h"
+#include"security_function.h"
+#include"edit_function.h"
+#include"file_function.h"
+#include"sort_function.h"
+#include"search_function.h"
+
+
+extern short int MASSIVE_SIZE;
+extern unsigned int MINIMAL_SALARY;
 
 using namespace std;
 
-void formOfMainMenu() {
-	cout << "-----------------------------" << endl;
-	cout << "|       Главное меню        |" << endl;
-	cout << "-----------------------------" << endl;
-	cout << "| 1 - Режим редактирования  |" << endl;
-	cout << "|                           |" << endl;
-	cout << "| 2 - Режим обработки       |" << endl;
-	cout << "|                           |" << endl;
-	cout << "| 0 - Выйти из программы    |" << endl;
-	cout << "-----------------------------\n" << endl;
+void searchMenu(short int choice, student*& pMassive) {
+	bool running = true;
+
+	if (MASSIVE_SIZE <= 0) {
+		cout << "Поиск невозможен, так как список студентов пуст . . ." << endl;
+		system("pause");
+		return;
+	}
+
+	while (running) {
+		formOfSearchMenu(); // вывод меню поиска
+
+		choice = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		system("cls");
+
+		switch (choice)
+		{
+		case modeOfSerching::search_by_name:
+			searchStudentByName(pMassive);
+			system("pause");
+			break;
+		case modeOfSerching::search_by_group:
+			searchStudentByGroup(pMassive);
+			system("pause");
+			break;
+		case modeOfSerching::search_by_average_number:
+			searchStudentByAverageScore(pMassive);
+			system("pause");
+			break;
+		case modeOfSerching::close_search_menu:
+			return;
+		}
+		system("cls");
+	}
 }
-void formOfEditMode() {
-	cout << "-----------------------------------" << endl;
-	cout << "|      Режим редактирования       |" << endl;
-	cout << "-----------------------------------" << endl;
-	cout << "| 1 - Просмотр всех записей       |" << endl;
-	cout << "|                                 |" << endl;
-	cout << "| 2 - Добавить студента в список  |" << endl;
-	cout << "|                                 |" << endl;
-	cout << "| 3 - Удалить студента из списка  |" << endl;
-	cout << "|                                 |" << endl;
-	cout << "| 4 - Редактировать запись        |" << endl;
-	cout << "|                                 |" << endl;
-	cout << "| 5 - Загрузить данные из файла   |" << endl;
-	cout << "|                                 |" << endl;
-	cout << "| 6 - Записать данные в файл      |" << endl;
-	cout << "|                                 |" << endl;
-	cout << "| 0 - Главное меню                |" << endl;
-	cout << "----------------------------------\n" << endl;
+void sortMenu(short int choice, student*& pMassive) {
+	bool running = true;
+
+	if (MASSIVE_SIZE <= 0) {
+		cout << "Сортировка невозможна, так как список студентов пуст . . ." << endl;
+		system("pause");
+		return;
+	}
+
+	while (running) {
+
+		formOfSortingMenu(); // вывод меню сортировки
+
+		choice = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		system("cls");
+
+		switch (choice)
+		{
+		case modeOfSorting::sort_by_name:
+			sortStudentListByStudentName(pMassive);
+			outputDataInTable(pMassive);
+			system("pause");
+			break;
+		case modeOfSorting::sort_by_average_mark:
+			sortStudentListByAverageMark(pMassive);
+			outputDataInTable(pMassive);
+			system("pause");
+			break;
+		case modeOfSorting::sort_by_income:
+			sortStudentListByIncome(pMassive);
+			outputDataInTable(pMassive);
+			system("pause");
+			break;
+		case modeOfSorting::close_sort_menu:
+			running = false;
+		}
+		system("cls");
+	}
 }
-void formOfEditMenu() {
-	cout << "-----------------------------------------" << endl;
-	cout << "|          Меню редактирования          |" << endl;
-	cout << "-----------------------------------------" << endl;
-	cout << "| 1 - Имя                               |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 2 - Номер группы                      |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 3 - Занятие социальными работами      |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 4 - Средний балл                      |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 5 - Доход первого члена семьи         |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 6 - Доход второго члена семьи         |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 0 - Главное меню                      |" << endl;
-	cout << "-----------------------------------------\n" << endl;
-}
-void formOfProcessingMenu() {
-	cout << "-------------------------------------" << endl;
-	cout << "|          Режим обработки          |" << endl;
-	cout << "-------------------------------------" << endl;
-	cout << "| 1 - Меню поиска                   |" << endl;
-	cout << "|                                   |" << endl;
-	cout << "| 2 - Меню сортировки списка        |" << endl;
-	cout << "|                                   |" << endl;
-	cout << "| 3 - Меню распределения мест       |" << endl;
-	cout << "|                                   |" << endl;
-	cout << "| 0 - Главное меню                  |" << endl;
-	cout << "------------------------------------\n" << endl;
-}
-void formOfSearchMenu() {
-	cout << "-----------------------------------------" << endl;
-	cout << "|              Меню поиска              |" << endl;
-	cout << "-----------------------------------------" << endl;
-	cout << "| 1 - Поиск студентов по имени          |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 2 - Поиск студентов по номеру группы  |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 3 - Поиск студентов по средниму баллу |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 0 - Главное меню                      |" << endl;
-	cout << "-----------------------------------------\n" << endl;
+void individualTaskMenu(short int choice, student*& pMassive) {
+
+	formOfMenuOfSettelment();
+
+	choice = inputNumber(isNumberRangeCorrectForMenu);
+
+	system("cls");
+
+	switch (choice)
+	{
+	case modeOfIndividualTask::output_student_by_priority:
+		if (MINIMAL_SALARY <= 0) {
+			cout << "Перед тем, как вывести список, введите значение минимальной зарплаты . . .\n" << endl;
+			break;
+		}
+		sortStudentListByPriority(pMassive);
+		outputDataInTable(pMassive);
+		break;
+	case modeOfIndividualTask::input_minimal_salary:
+		inputMinimalSalary();
+		break;
+	case modeOfIndividualTask::close_individual_task_menu:
+		return;
+	}
+	system("pause");
+	system("cls");
 }
 
-void formOfSortingMenu() {
-	cout << "-----------------------------------------" << endl;
-	cout << "|           Меню сортировки             |" << endl;
-	cout << "-----------------------------------------" << endl;
-	cout << "| 1 - Сортировка по алфавиту            |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 2 - Сортировка по среднему баллу      |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 3 - Сортировка по доходу              |" << endl;
-	cout << "|                                       |" << endl;
-	cout << "| 0 - Главное меню                      |" << endl;
-	cout << "-----------------------------------------\n" << endl;
+void editMenu(short int choice, student*& pMassive) {
+
+	int index = 0;
+
+	formOfEditMode();
+
+	choice = inputNumber(isNumberRangeCorrectForEditMenu);
+
+	system("cls");
+
+	switch (choice)
+	{
+	case modeOfEditing::output_data:
+		outputDataInTable(pMassive);
+		break;
+	case modeOfEditing::add_student_info:
+		addStudentInList(pMassive);
+		break;
+	case modeOfEditing::delete_student_structer:
+		outputDataInTable(pMassive);
+		if (MASSIVE_SIZE == 0) break;
+		index = getNumberOfStudent();
+		deleteStudentElement(pMassive, index);
+		break;
+	case modeOfEditing::edit_student_info:
+		outputDataInTable(pMassive);
+		if (MASSIVE_SIZE == 0) break;
+		index = getNumberOfStudent();
+		system("cls");
+		editStudentElement(pMassive, index);
+		break;
+	case modeOfEditing::get_data_from_file:
+		getDataFromFile(pMassive);
+		break;
+	case modeOfEditing::record_data_in_file:
+		recordDatainFile(pMassive);
+		break;
+	case modeOfEditing::close_editing_menu:
+		system("cls");
+		return;
+	}
+	system("pause");
+	system("cls");
+}
+void processingMenu(short int choiceProcessingMode, short int choiceSearchMode, short int choiceSortMode, student*& pMassive) {
+
+	short int choiseModeOfIndTask = 0;
+
+	formOfProcessingMenu(); // вывод меню обработки
+
+	choiceProcessingMode = inputNumber(isNumberRangeCorrectForProccesingMenu);
+
+	system("cls");
+
+	switch (choiceProcessingMode)
+	{
+	case modeOfProcessing::search_student_info:
+		searchMenu(choiceSearchMode, pMassive);
+		break;
+	case modeOfProcessing::sort_menu:
+		sortMenu(choiceSortMode, pMassive);
+		break;
+	case modeOfProcessing::individual_task:
+		individualTaskMenu(choiseModeOfIndTask, pMassive);
+		break;
+	case modeOfProcessing::close_processing_mode:
+		return;
+	}
 }
 
-void formOfMenuOfSettelment() {
-	cout << "+----------------------------------------------------+" << endl;
-	cout << "|           Меню распределения студентов             |" << endl;
-	cout << "+----------------------------------------------------+" << endl;
-	cout << "| 1 - Вывести список очередности предоставления мест |" << endl;
-	cout << "|                                                    |" << endl;
-	cout << "| 2 - Ввод минимальной зарплаты                      |" << endl;
-	cout << "|                                                    |" << endl;
-	cout << "| 0 - Главное меню                                   |" << endl;
-	cout << "+----------------------------------------------------+\n" << endl;
-}

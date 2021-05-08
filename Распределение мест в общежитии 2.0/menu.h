@@ -1,9 +1,8 @@
 #pragma once
+#include"userTypes.h"
 
-void formOfMainMenu();
-void formOfEditMode();
-void formOfEditMenu();
-void formOfProcessingMenu();
-void formOfSearchMenu();
-void formOfSortingMenu();
-void formOfMenuOfSettelment();
+void editMenu(short int, student*&);
+void processingMenu(short int, short int, short int, student*&);
+void searchMenu(short int, student*&);
+void sortMenu(short int, student*&);
+void individualTaskMenu(short int, student*&);
