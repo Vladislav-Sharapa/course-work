@@ -1,4 +1,5 @@
 #include<iostream>
+#include<iomanip>
 
 #include"userTypes.h"
 #include"form_of_menu.h"
@@ -14,6 +15,41 @@ extern unsigned int MINIMAL_SALARY;
 
 using namespace std;
 
+
+// меню просмотра 
+void outputMenu(student* pMassive) {
+	short int choise = 0;
+	int amount = 0;
+	bool running = true;
+
+	if (MASSIVE_SIZE <= 0) {
+		cout << "Просмотр невозможен, так как список студентов пуст . . ." << endl;
+		return;
+	}
+
+	formOfOutputMenu();
+
+	choise = inputNumber(isNumberRangeCorrectForProccesingMenu);
+	system("cls");
+
+	switch (choise)
+	{
+	case modeOfOutputMenu::output_all_elements:
+		outputDataInTable(pMassive);
+		break;
+	case modeOfOutputMenu::output_social_activity_student:
+		outputStudentWithSocialActicity(pMassive);
+		break;
+	case modeOfOutputMenu::output_student_with_min_income:
+		outputStudentWithMinIncome(pMassive);
+		break;
+	case modeOfOutputMenu::close_output_menu:
+		return;
+	}
+}
+
+
+// Меню поиска
 void searchMenu(short int choice, student*& pMassive) {
 	bool running = true;
 
@@ -49,6 +85,7 @@ void searchMenu(short int choice, student*& pMassive) {
 		system("cls");
 	}
 }
+// Меню сортировки
 void sortMenu(short int choice, student*& pMassive) {
 	bool running = true;
 
@@ -88,6 +125,7 @@ void sortMenu(short int choice, student*& pMassive) {
 		system("cls");
 	}
 }
+// Меню распределения мест в общежитии 
 void individualTaskMenu(short int choice, student*& pMassive) {
 
 	formOfMenuOfSettelment();
@@ -105,9 +143,14 @@ void individualTaskMenu(short int choice, student*& pMassive) {
 		}
 		sortStudentListByPriority(pMassive);
 		outputDataInTable(pMassive);
+		cout << "\n-----------------------+" << endl;
+		cout << "| Минимальная зарплата |" << endl;
+		cout << "+----------------------" << endl;
+		cout << "|"<<setw(12)<<MINIMAL_SALARY<<setw(11)<<"|"<< endl;
+		cout << "+----------------------+\n" << endl;
 		break;
 	case modeOfIndividualTask::input_minimal_salary:
-		inputMinimalSalary();
+		inputMinimalSalary(pMassive);
 		break;
 	case modeOfIndividualTask::close_individual_task_menu:
 		return;
@@ -116,6 +159,7 @@ void individualTaskMenu(short int choice, student*& pMassive) {
 	system("cls");
 }
 
+// Режим редактирования
 void editMenu(short int choice, student*& pMassive) {
 
 	int index = 0;
@@ -129,7 +173,7 @@ void editMenu(short int choice, student*& pMassive) {
 	switch (choice)
 	{
 	case modeOfEditing::output_data:
-		outputDataInTable(pMassive);
+		outputMenu(pMassive);
 		break;
 	case modeOfEditing::add_student_info:
 		addStudentInList(pMassive);
@@ -160,6 +204,7 @@ void editMenu(short int choice, student*& pMassive) {
 	system("pause");
 	system("cls");
 }
+// Режим обработки
 void processingMenu(short int choiceProcessingMode, short int choiceSearchMode, short int choiceSortMode, student*& pMassive) {
 
 	short int choiseModeOfIndTask = 0;

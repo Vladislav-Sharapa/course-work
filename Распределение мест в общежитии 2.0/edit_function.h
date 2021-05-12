@@ -4,13 +4,14 @@
 
 // вывод данных в виде таблицы
 void outputDataInTable(student*);
+void outputStudentWithSocialActicity(student*);
+void outputStudentWithMinIncome(student*);
 
 // добавление элемента в массив
 student inputInfoAboutStudent();
 void addStudentInList(student*&);
 
-// функция для нахождения студента по имени
-int findIndexOfStudentByName(student*);
+// функция для получения индекса структуры, которая находится в массиве
 int getNumberOfStudent();
 
 // функции редактирования
@@ -19,4 +20,5 @@ void editStudentElement(student*&, int);
 // функция удаления
 void deleteStudentElement(student*&, int);
 
-void inputMinimalSalary();
+//функция ввода минимальной зарплаты
+void inputMinimalSalary(student *&);

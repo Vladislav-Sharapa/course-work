@@ -10,7 +10,7 @@ using namespace std;
 extern short int MASSIVE_SIZE;
 extern unsigned int MINIMAL_SALARY;
 
-// функция для вывода
+// функция для вывода информации в консоль в виде таблицы
 void outputDataInTable(student* pMassive) {
 
 	if (MASSIVE_SIZE == 0) {
@@ -18,7 +18,10 @@ void outputDataInTable(student* pMassive) {
 		return;
 	}
 
-	string socialActivity = "";
+	string socialActivity = "";  // переменная, которая выводит информацию о соц. активности студента 
+	/*Если переменная short int socialActivity, хранящаяся в структуре student, будет равна 1, то
+	переменной string socialActivity будет присвоена строка "Участвовал", иначе - "Не участвовал".
+	Это сделано с целью отображения информации в таблице, которая будет понятна пользователю (вместо 1 или 2)*/
 
 	cout << "+--------------------------------------------------------------------------+" << endl;
 	cout << "| Номер | Имя студента | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
@@ -34,10 +37,69 @@ void outputDataInTable(student* pMassive) {
 		cout << "+--------------------------------------------------------------------------+" << endl;
 	}
 }
+void outputStudentWithSocialActicity(student* pMassive) {
+	
+	string socialActivity = "";
+	int amountOfStudent = 0;
 
-// функции добавления студентов в список
+	for (int i = 0; i < MASSIVE_SIZE; i++) {
+		if (pMassive[i].socialActivity == 1) {
+			amountOfStudent++;
+
+			if (amountOfStudent == 1) {
+				cout << "+------------------------------------------------------------------+" << endl;
+				cout << "| Имя студента | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
+				cout << "+------------------------------------------------------------------+" << endl;
+			}
+
+			if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
+			else socialActivity = "Не участвовал";
+
+			cout << "|" << setw(14) << pMassive[i].studentName << "|";
+			cout << setw(14) << pMassive[i].groupNumber << "|" << setw(10) << pMassive[i].averageScore << "|";
+			cout << setw(7) << pMassive[i].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
+			cout << "+------------------------------------------------------------------+" << endl;
+		}
+	}
+	if (amountOfStudent == 0) cout << "Таких студентов нет в списке" << endl;
+}
+void outputStudentWithMinIncome(student* pMassive) {
+	string socialActivity = "";
+	int amountOfStudent = 0;
+	int minimalWage = MINIMAL_SALARY * 2;
+
+
+	if (MINIMAL_SALARY == 0) {
+		cout << "Перед выводом списка введите значение минимальной зарплаты . . ." << endl;
+		return;
+	}
+
+	for (int i = 0; i < MASSIVE_SIZE; i++) {
+		if (pMassive[i].income.netIncome < minimalWage) {
+			amountOfStudent++;
+
+			if (amountOfStudent == 1) {
+				cout << "+------------------------------------------------------------------+" << endl;
+				cout << "| Имя студента | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
+				cout << "+------------------------------------------------------------------+" << endl;
+			}
+
+			if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
+			else socialActivity = "Не участвовал";
+
+			cout << "|" << setw(14) << pMassive[i].studentName << "|";
+			cout << setw(14) << pMassive[i].groupNumber << "|" << setw(10) << pMassive[i].averageScore << "|";
+			cout << setw(7) << pMassive[i].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
+			cout << "+------------------------------------------------------------------+" << endl;
+		}
+	}
+	if (amountOfStudent == 0) cout << "Таких студентов нет в списке" << endl;
+}
+
+// функции для ввода информации о студенте 
 student inputInfoAboutStudent() {
 	student info;
+	int minimalWage = MINIMAL_SALARY * 2;
 
 	cout << "\nВведите имя студента: ";
 	cin.getline(info.studentName, 30);
@@ -53,47 +115,48 @@ student inputInfoAboutStudent() {
 
 	cout << "Введите доход первого члена семьи: ";
 	cin >> info.income.firstIncome;
+
 	cout << "Введите доход второго члена семьи: ";
 	cin >> info.income.secondIncome;
 	info.income.netIncome = (info.income.firstIncome + info.income.secondIncome) / 2;
-	if (info.income.netIncome < MINIMAL_SALARY) info.income.flag = true;
+	if (info.income.netIncome < minimalWage) info.income.flag = true;
 
 	return info;
 }
-// функция добавления
-void addStudentInList(student*& pMassive) {  // подселение студентов
-
+// функция добавления студента в массив
+void addStudentInList(student*& pMassive) { 
+	
 	if (MASSIVE_SIZE == 0) {
 		cout << "\nЗаселение первого студента" << endl;
 		MASSIVE_SIZE++;
-		pMassive = new student[MASSIVE_SIZE];
+		pMassive = new student[MASSIVE_SIZE]; // создание массива
 
-		pMassive[MASSIVE_SIZE - 1] = inputInfoAboutStudent();
+		pMassive[MASSIVE_SIZE - 1] = inputInfoAboutStudent(); // добавления структуры в массив
 	}
 	else {
 		MASSIVE_SIZE++;
-		student* newMassive = new student[MASSIVE_SIZE];
+		student* newMassive = new student[MASSIVE_SIZE]; // создание нового массива
 
-		for (int i = 0; i < MASSIVE_SIZE - 1; i++) newMassive[i] = pMassive[i];
+		for (int i = 0; i < MASSIVE_SIZE - 1; i++) newMassive[i] = pMassive[i]; // перезапись элементов из старого массива в новый
 
-		newMassive[MASSIVE_SIZE - 1] = inputInfoAboutStudent();
+		newMassive[MASSIVE_SIZE - 1] = inputInfoAboutStudent(); // добавление записи в конец массива
 
-		delete[] pMassive;
-		pMassive = newMassive;
-	}
+		delete[] pMassive; // удаление старого массива
+		pMassive = newMassive; // ставим указатель на новый массив
+	} 
 
 }
-
+// функция для получения индекса студента по запросу пользователя
 int getNumberOfStudent() {
 
 	int choiseNumberOfStudent = 0;
-	bool running = true;
+	bool running = true; // переменная для остановки цикла while
 
 	while (running) {
 		cout << "\nВыберите студента . . ." << endl;
-		choiseNumberOfStudent = inputNumber(trueFunction);
+		choiseNumberOfStudent = inputNumber(trueFunction);  // ввод данных и их проверка
 
-		if (choiseNumberOfStudent <= 0 or choiseNumberOfStudent > MASSIVE_SIZE) cout << "Студента под таким номером нет в списке. Введите данны повторно . . ." << endl;
+		if (choiseNumberOfStudent <= 0 or choiseNumberOfStudent > MASSIVE_SIZE) cout << "Студента под таким номером нет в списке. Введите данныe повторно . . ." << endl;
 		else running = false;
 	}
 
@@ -110,9 +173,9 @@ void editStudentElement(student*& pMassive, int index) {
 
 	while (running) {
 		double income = 0;
-		short int choice = 0;
+		short int choice = 0;  // переменная для выбора параметра редактирования 
 
-		formOfEditMenu();
+		formOfEditMenu();  // функция вывода меню редактирования (с возможными вариантами выбора)
 		cout << "\nВыбор: ";
 
 		cin >> choice;
@@ -154,33 +217,49 @@ void editStudentElement(student*& pMassive, int index) {
 	}
 }
 
+// функция удаления 
 void deleteStudentElement(student*& pMassive, int indexOfStudent) {
 
 	MASSIVE_SIZE--;
-	short int deleteAction = 0;
+	short int deleteAction = 0;  // переменная для подтверждения выполнения необратимых действий
 	student* newMassive = new student[MASSIVE_SIZE];
 
-	cout << "Вы действительно хотите удалить элемент? (1 - Да, 2 - Нет)\n" << "Решение: ";
+	cout << "Вы действительно хотите удалить студента из списка? (1 - Да, 2 - Нет)\n" << "Решение: ";
 	cin >> deleteAction;
 
 	switch (deleteAction)
 	{
-	case confirmationOfTheExecution::confirm:
+	case confirmationOfTheExecution::confirm: // удаляем элемент
 
-		for (int i = indexOfStudent; i < MASSIVE_SIZE; i++) swap(pMassive[i], pMassive[i + 1]);
-		for (int i = 0; i < MASSIVE_SIZE; i++) newMassive[i] = pMassive[i]; //заполняем новый массив
+		for (int i = indexOfStudent; i < MASSIVE_SIZE; i++) swap(pMassive[i], pMassive[i + 1]);  // перемаещаем выбранный элемент в конец массива
+		for (int i = 0; i < MASSIVE_SIZE; i++) newMassive[i] = pMassive[i]; // перезаписываем все элементы, кроме последнего, из старого массива в новый 
 
-		delete[] pMassive;
-		pMassive = newMassive;
+		delete[] pMassive; // удаляем старый массив
+		pMassive = newMassive; // ставим указатель на новый массив
 		break;
 
-	case confirmationOfTheExecution::notConfirm:
+	case confirmationOfTheExecution::notConfirm:  // оставляем элемент в массиве
 		cout << "Элемент оставлен в ячейке массива" << endl;
-		delete[] newMassive;
+		MASSIVE_SIZE++;
+		delete[] newMassive; // удаляем новый массив
 	}
 }
 
-void inputMinimalSalary() {
+// функциия для ввода минимальной зарплаты
+void inputMinimalSalary(student*& pMassive) {
+	
+	if (MASSIVE_SIZE == 0) {
+		cout<<"Перед тем, как ввести минимальную заработную плату, добавьте студентов в список . . ."<<endl;
+		return;
+	}
+	
 	cout << "Минимальная заработная плата: ";
 	cin >> MINIMAL_SALARY;
+
+	int minimalWage = MINIMAL_SALARY * 2;
+
+	for (int i = 0; i < MASSIVE_SIZE; i++) {
+		if (pMassive[i].income.netIncome < minimalWage) pMassive[i].income.flag = true;
+		else pMassive[i].income.flag = false;
+	}
 }

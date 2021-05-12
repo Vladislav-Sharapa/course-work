@@ -7,3 +7,4 @@ void formOfProcessingMenu();
 void formOfSearchMenu();
 void formOfSortingMenu();
 void formOfMenuOfSettelment();
+void formOfOutputMenu();

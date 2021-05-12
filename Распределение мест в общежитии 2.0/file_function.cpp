@@ -60,6 +60,8 @@ void recordDatainFile(student* pMassive) {
 		cout << "Запись данных в файл прошла успешно . . ." << endl;
 	}
 
+	file.close();
+
 }
 void recordDataInEndOfFile(student* pMassive) {
 
@@ -70,4 +72,6 @@ void recordDataInEndOfFile(student* pMassive) {
 		return;
 	}
 	else file.write((char*)&pMassive[MASSIVE_SIZE - 1], sizeof(student));
+
+	file.close();
 }

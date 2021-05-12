@@ -21,3 +21,4 @@ enum modeOfSerching { search_by_name = 1, search_by_group, search_by_average_num
 enum modeOfSorting { sort_by_name = 1, sort_by_average_mark, sort_by_income, close_sort_menu = 0 };
 enum confirmationOfTheExecution { confirm = 1, notConfirm };
 enum modeOfIndividualTask {output_student_by_priority = 1, input_minimal_salary, close_individual_task_menu = 0};
+enum modeOfOutputMenu {output_all_elements = 1, output_social_activity_student, output_student_with_min_income, close_output_menu = 0};
