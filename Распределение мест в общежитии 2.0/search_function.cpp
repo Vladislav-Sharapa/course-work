@@ -33,9 +33,9 @@ void searchStudentByName(student* pMassive) {
 	cout << "Результат поиска: \n" << endl;
 	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
 	else {
-		cout << "+--------------------------------------------------------------------------+" << endl;
-		cout << "| Номер | Имя студента | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
-		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "+------------------------------------------------------------------------+" << endl;
+		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
+		cout << "+------------------------------------------------------------------------+" << endl;
 
 		for (int i = 0; i < index.size(); i++) {
 			string socialActivity = "";
@@ -43,10 +43,10 @@ void searchStudentByName(student* pMassive) {
 			if (pMassive[index[i]].socialActivity == 1) socialActivity = "Участвовал";
 			else socialActivity = "Не участвовал";
 
-			cout << "|" << setw(7) << i + 1 << "|" << setw(14) << pMassive[index[i]].studentName << "|";
+			cout << "|" << setw(20) << pMassive[index[i]].studentName << "|";
 			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
 			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+--------------------------------------------------------------------------+" << endl;
+			cout << "+------------------------------------------------------------------------+" << endl;
 		}
 	}
 }
@@ -67,11 +67,12 @@ void searchStudentByGroup(student* pMassive) {
 		}
 	}
 
+	cout << "Результат поиска: \n" << endl;
 	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
 	else {
-		cout << "+--------------------------------------------------------------------------+" << endl;
-		cout << "| Номер | Имя студента | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
-		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "+------------------------------------------------------------------------+" << endl;
+		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
+		cout << "+------------------------------------------------------------------------+" << endl;
 
 		for (int i = 0; i < index.size(); i++) {
 			string socialActivity = "";
@@ -79,10 +80,10 @@ void searchStudentByGroup(student* pMassive) {
 			if (pMassive[index[i]].socialActivity == 1) socialActivity = "Участвовал";
 			else socialActivity = "Не участвовал";
 
-			cout << "|" << setw(7) << i + 1 << "|" << setw(14) << pMassive[index[i]].studentName << "|";
+			cout << "|" << setw(20) << pMassive[index[i]].studentName << "|";
 			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
 			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+--------------------------------------------------------------------------+" << endl;
+			cout << "+------------------------------------------------------------------------+" << endl;
 		}
 	}
 
@@ -103,11 +104,13 @@ void searchStudentByAverageScore(student* pMassive) {
 			flag = true;
 		}
 	}
+
+	cout << "Результат поиска: \n" << endl;
 	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
 	else {
-		cout << "+--------------------------------------------------------------------------+" << endl;
-		cout << "| Номер | Имя студента | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
-		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "+------------------------------------------------------------------------+" << endl;
+		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
+		cout << "+------------------------------------------------------------------------+" << endl;
 
 		for (int i = 0; i < index.size(); i++) {
 			string socialActivity = "";
@@ -115,10 +118,10 @@ void searchStudentByAverageScore(student* pMassive) {
 			if (pMassive[index[i]].socialActivity == 1) socialActivity = "Участвовал";
 			else socialActivity = "Не участвовал";
 
-			cout << "|" << setw(7) << i + 1 << "|" << setw(14) << pMassive[index[i]].studentName << "|";
+			cout << "|" << setw(20) << pMassive[index[i]].studentName << "|";
 			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
 			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+--------------------------------------------------------------------------+" << endl;
+			cout << "+------------------------------------------------------------------------+" << endl;
 		}
 	}
 }

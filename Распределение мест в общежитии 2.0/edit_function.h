@@ -6,6 +6,7 @@
 void outputDataInTable(student*);
 void outputStudentWithSocialActicity(student*);
 void outputStudentWithMinIncome(student*);
+void outputStudentByIndex(int, student*);
 
 // добавление элемента в массив
 student inputInfoAboutStudent();

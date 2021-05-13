@@ -22,7 +22,7 @@ void getDataFromFile(student*& pMassive) {
 		return;
 	}
 
-	ifstream file("D:\\C++\\Structers of student\\file.dat", ios::binary);
+	ifstream file("D:\\C++\\Structers of student\\file2.dat", ios::binary);
 
 	if (file.is_open()) cout << "\nФайл открыт. . .\n";
 	else {
@@ -49,7 +49,7 @@ void recordDatainFile(student* pMassive) {
 		return;
 	}
 
-	ofstream file("D:\\C++\\Structers of student\\file.dat", ios::binary | ios::out);
+	ofstream file("D:\\C++\\Structers of student\\file2.dat", ios::binary | ios::out);
 
 	if (!file.is_open()) {
 		cout << "Ошибка при открытии. Указанный файл не существует" << endl;

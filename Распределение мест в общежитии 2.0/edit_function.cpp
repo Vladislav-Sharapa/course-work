@@ -23,18 +23,18 @@ void outputDataInTable(student* pMassive) {
 	переменной string socialActivity будет присвоена строка "Участвовал", иначе - "Не участвовал".
 	Это сделано с целью отображения информации в таблице, которая будет понятна пользователю (вместо 1 или 2)*/
 
-	cout << "+--------------------------------------------------------------------------+" << endl;
-	cout << "| Номер | Имя студента | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
-	cout << "+--------------------------------------------------------------------------+" << endl;
+	cout << "+--------------------------------------------------------------------------------+" << endl;
+	cout << "| Номер |    Имя студента    | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
+	cout << "+--------------------------------------------------------------------------------+" << endl;
 
 	for (int i = 0; i < MASSIVE_SIZE; i++) {
 		if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
 		else socialActivity = "Не участвовал";
 
-		cout << "|" << setw(7) << i + 1 << "|" << setw(14) << pMassive[i].studentName << "|";
+		cout << "|" << setw(7) << i + 1 << "|" << setw(20) << pMassive[i].studentName << "|";
 		cout << setw(14) << pMassive[i].groupNumber << "|" << setw(10) << pMassive[i].averageScore << "|";
 		cout << setw(7) << pMassive[i].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "+--------------------------------------------------------------------------------+" << endl;
 	}
 }
 void outputStudentWithSocialActicity(student* pMassive) {
@@ -47,18 +47,18 @@ void outputStudentWithSocialActicity(student* pMassive) {
 			amountOfStudent++;
 
 			if (amountOfStudent == 1) {
-				cout << "+------------------------------------------------------------------+" << endl;
-				cout << "| Имя студента | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
-				cout << "+------------------------------------------------------------------+" << endl;
+				cout << "+------------------------------------------------------------------------+" << endl;
+				cout << "|    Имя студента    | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
+				cout << "+------------------------------------------------------------------------+" << endl;
 			}
 
 			if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
 			else socialActivity = "Не участвовал";
 
-			cout << "|" << setw(14) << pMassive[i].studentName << "|";
+			cout << "|" << setw(20) << pMassive[i].studentName << "|";
 			cout << setw(14) << pMassive[i].groupNumber << "|" << setw(10) << pMassive[i].averageScore << "|";
 			cout << setw(7) << pMassive[i].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+------------------------------------------------------------------+" << endl;
+			cout << "+------------------------------------------------------------------------+" << endl;
 		}
 	}
 	if (amountOfStudent == 0) cout << "Таких студентов нет в списке" << endl;
@@ -79,23 +79,39 @@ void outputStudentWithMinIncome(student* pMassive) {
 			amountOfStudent++;
 
 			if (amountOfStudent == 1) {
-				cout << "+------------------------------------------------------------------+" << endl;
-				cout << "| Имя студента | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
-				cout << "+------------------------------------------------------------------+" << endl;
+				cout << "+------------------------------------------------------------------------+" << endl;
+				cout << "|    Имя студента    | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
+				cout << "+------------------------------------------------------------------------+" << endl;
 			}
 
 			if (pMassive[i].socialActivity == 1) socialActivity = "Участвовал";
 			else socialActivity = "Не участвовал";
 
-			cout << "|" << setw(14) << pMassive[i].studentName << "|";
+			cout << "|" << setw(20) << pMassive[i].studentName << "|";
 			cout << setw(14) << pMassive[i].groupNumber << "|" << setw(10) << pMassive[i].averageScore << "|";
 			cout << setw(7) << pMassive[i].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+------------------------------------------------------------------+" << endl;
+			cout << "+------------------------------------------------------------------------+" << endl;
 		}
 	}
 	if (amountOfStudent == 0) cout << "Таких студентов нет в списке" << endl;
 }
+void outputStudentByIndex(int index, student* pMassive)
+{
+	string socialActivity = "";
 
+	cout << "-------------------------------------------------------------------------+" << endl;
+	cout << "|    Имя студента    | Номер группы | Ср. балл | Доход | Cоц. активность |" << endl;
+	cout << "+------------------------------------------------------------------------+" << endl;
+
+
+	if (pMassive[index].socialActivity == 1) socialActivity = "Участвовал";
+	else socialActivity = "Не участвовал";
+
+	cout <<  "|" << setw(20) << pMassive[index].studentName << "|";
+	cout << setw(14) << pMassive[index].groupNumber << "|" << setw(10) << pMassive[index].averageScore << "|";
+	cout << setw(7) << pMassive[index].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
+	cout << "+------------------------------------------------------------------------+" << endl;
+}
 // функции для ввода информации о студенте 
 student inputInfoAboutStudent() {
 	student info;
@@ -168,14 +184,13 @@ int getNumberOfStudent() {
 void editStudentElement(student*& pMassive, int index) {
 
 	bool running = true;  // для остановки цикла while
-
 	cout << "Выберите параметр для редактирования . . ." << endl;
-
 	while (running) {
 		double income = 0;
 		short int choice = 0;  // переменная для выбора параметра редактирования 
 
 		formOfEditMenu();  // функция вывода меню редактирования (с возможными вариантами выбора)
+		outputStudentByIndex(index, pMassive);
 		cout << "\nВыбор: ";
 
 		cin >> choice;
@@ -183,12 +198,18 @@ void editStudentElement(student*& pMassive, int index) {
 		switch (choice)
 		{
 		case 1:
+			cin.ignore();
 			cout << "Имя: ";
-			cin >> pMassive[index].studentName;
+			cin.getline(pMassive[index].studentName, 30);
+			cout << "Имя студента изменено . . ."<< endl;
+			system("pause");
 			break;
 		case 2:
+			cin.ignore();
 			cout << "Номер группы: ";
-			cin >> pMassive[index].groupNumber;
+			cin.getline(pMassive[index].groupNumber, 20);
+			cout << "Номер группы студента изменен . . ." << endl;
+			system("pause");
 			break;
 		case 3:
 			cout << "Занятие социальными работами ({1} - Да, {2} - Нет): ";
@@ -197,6 +218,8 @@ void editStudentElement(student*& pMassive, int index) {
 		case 4:
 			cout << "Средний балл: ";
 			cin >> pMassive[index].averageScore;
+			cout << "Средний бал студента изменен . . ." << endl;
+			system("pause");
 			break;
 		case 5:
 			cout << "Доход первого члена семьи: ";

@@ -27,25 +27,32 @@ void outputMenu(student* pMassive) {
 		return;
 	}
 
-	formOfOutputMenu();
+	while (running) {
+		formOfOutputMenu();
 
-	choise = inputNumber(isNumberRangeCorrectForProccesingMenu);
-	system("cls");
+		choise = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		system("cls");
 
-	switch (choise)
-	{
-	case modeOfOutputMenu::output_all_elements:
-		outputDataInTable(pMassive);
-		break;
-	case modeOfOutputMenu::output_social_activity_student:
-		outputStudentWithSocialActicity(pMassive);
-		break;
-	case modeOfOutputMenu::output_student_with_min_income:
-		outputStudentWithMinIncome(pMassive);
-		break;
-	case modeOfOutputMenu::close_output_menu:
-		return;
+		switch (choise)
+		{
+		case modeOfOutputMenu::output_all_elements:
+			outputDataInTable(pMassive);
+			system("pause");
+			break;
+		case modeOfOutputMenu::output_social_activity_student:
+			outputStudentWithSocialActicity(pMassive);
+			system("pause");
+			break;
+		case modeOfOutputMenu::output_student_with_min_income:
+			outputStudentWithMinIncome(pMassive);
+			system("pause");
+			break;
+		case modeOfOutputMenu::close_output_menu:
+			return;
+		}
+		system("cls");
 	}
+	
 }
 
 
@@ -128,35 +135,41 @@ void sortMenu(short int choice, student*& pMassive) {
 // Меню распределения мест в общежитии 
 void individualTaskMenu(short int choice, student*& pMassive) {
 
-	formOfMenuOfSettelment();
+	bool running = true;
 
-	choice = inputNumber(isNumberRangeCorrectForMenu);
+	while (running) {
+		formOfMenuOfSettelment();
 
-	system("cls");
+		choice = inputNumber(isNumberRangeCorrectForMenu);
+		system("cls");
 
-	switch (choice)
-	{
-	case modeOfIndividualTask::output_student_by_priority:
-		if (MINIMAL_SALARY <= 0) {
-			cout << "Перед тем, как вывести список, введите значение минимальной зарплаты . . .\n" << endl;
+		switch (choice)
+		{
+		case modeOfIndividualTask::output_student_by_priority:
+			if (MINIMAL_SALARY <= 0) {
+				cout << "Перед тем, как вывести список, введите значение минимальной зарплаты . . .\n" << endl;
+				system("pause");
+				break;
+			}
+
+			sortStudentListByPriority(pMassive);
+			outputDataInTable(pMassive);
+			cout << "\n-----------------------+" << endl;
+			cout << "| Минимальная зарплата |" << endl;
+			cout << "+----------------------" << endl;
+			cout << "|" << setw(12) << MINIMAL_SALARY << setw(11) << "|" << endl;
+			cout << "+----------------------+\n" << endl;
+			system("pause");
 			break;
+		case modeOfIndividualTask::input_minimal_salary:
+			inputMinimalSalary(pMassive);
+			system("pause");
+			break;
+		case modeOfIndividualTask::close_individual_task_menu:
+			return;
 		}
-		sortStudentListByPriority(pMassive);
-		outputDataInTable(pMassive);
-		cout << "\n-----------------------+" << endl;
-		cout << "| Минимальная зарплата |" << endl;
-		cout << "+----------------------" << endl;
-		cout << "|"<<setw(12)<<MINIMAL_SALARY<<setw(11)<<"|"<< endl;
-		cout << "+----------------------+\n" << endl;
-		break;
-	case modeOfIndividualTask::input_minimal_salary:
-		inputMinimalSalary(pMassive);
-		break;
-	case modeOfIndividualTask::close_individual_task_menu:
-		return;
+		system("cls");
 	}
-	system("pause");
-	system("cls");
 }
 
 // Режим редактирования
@@ -177,12 +190,14 @@ void editMenu(short int choice, student*& pMassive) {
 		break;
 	case modeOfEditing::add_student_info:
 		addStudentInList(pMassive);
+		system("pause");
 		break;
 	case modeOfEditing::delete_student_structer:
 		outputDataInTable(pMassive);
 		if (MASSIVE_SIZE == 0) break;
 		index = getNumberOfStudent();
 		deleteStudentElement(pMassive, index);
+		system("pause");
 		break;
 	case modeOfEditing::edit_student_info:
 		outputDataInTable(pMassive);
@@ -193,15 +208,16 @@ void editMenu(short int choice, student*& pMassive) {
 		break;
 	case modeOfEditing::get_data_from_file:
 		getDataFromFile(pMassive);
+		system("pause");
 		break;
 	case modeOfEditing::record_data_in_file:
 		recordDatainFile(pMassive);
+		system("pause");
 		break;
 	case modeOfEditing::close_editing_menu:
 		system("cls");
 		return;
 	}
-	system("pause");
 	system("cls");
 }
 // Режим обработки
