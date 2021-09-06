@@ -17,11 +17,15 @@ int inputNumber(bool(*pFuction)(int))
 }
 bool isNumberNumeric()
 {
-	if (cin.get() == '\n')
+	// возвращает последний символ из потока. Если все символы были цифрами,
+	// то последний символ потока будет переход на новую строку
+	if (cin.get() == '\n') 
 		return true;
 	else
 	{
+		// отбрасываем флаги ошибок
 		cin.clear();
+		// очищает поток
 		cin.ignore(256, '\n');
 		return false;
 	}

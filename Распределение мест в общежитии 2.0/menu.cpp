@@ -24,27 +24,28 @@ void outputMenu(student* pMassive) {
 
 	if (MASSIVE_SIZE <= 0) {
 		cout << "Просмотр невозможен, так как список студентов пуст . . ." << endl;
+		system("pause");
 		return;
 	}
 
 	while (running) {
 		formOfOutputMenu();
 
-		choise = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		choise = inputNumber(isNumberRangeCorrectForProccesingMenu); // ввод числа и его проверка на правильность
 		system("cls");
 
 		switch (choise)
 		{
 		case modeOfOutputMenu::output_all_elements:
-			outputDataInTable(pMassive);
+			outputDataInTable(pMassive);  // вывод списка студентов на консоль
 			system("pause");
 			break;
 		case modeOfOutputMenu::output_social_activity_student:
-			outputStudentWithSocialActicity(pMassive);
+			outputStudentWithSocialActicity(pMassive); // вывод студентов-общественников
 			system("pause");
 			break;
 		case modeOfOutputMenu::output_student_with_min_income:
-			outputStudentWithMinIncome(pMassive);
+			outputStudentWithMinIncome(pMassive); // вывод студентов с минимальным доходом
 			system("pause");
 			break;
 		case modeOfOutputMenu::close_output_menu:
@@ -112,18 +113,18 @@ void sortMenu(short int choice, student*& pMassive) {
 		switch (choice)
 		{
 		case modeOfSorting::sort_by_name:
-			sortStudentListByStudentName(pMassive);
-			outputDataInTable(pMassive);
+			sortStudentListByStudentName(pMassive); // сортировка по алфавиту
+			outputDataInTable(pMassive); // вывод списка студентов на консоль
 			system("pause");
 			break;
 		case modeOfSorting::sort_by_average_mark:
-			sortStudentListByAverageMark(pMassive);
-			outputDataInTable(pMassive);
+			sortStudentListByAverageMark(pMassive); // сортировка по среднему баллу
+			outputDataInTable(pMassive); // вывод списка студентов на консоль
 			system("pause");
 			break;
 		case modeOfSorting::sort_by_income:
-			sortStudentListByIncome(pMassive);
-			outputDataInTable(pMassive);
+			sortStudentListByIncome(pMassive); // сортировка по доходу
+			outputDataInTable(pMassive); // вывод списка студентов на консоль
 			system("pause");
 			break;
 		case modeOfSorting::close_sort_menu:
@@ -151,9 +152,8 @@ void individualTaskMenu(short int choice, student*& pMassive) {
 				system("pause");
 				break;
 			}
-
-			sortStudentListByPriority(pMassive);
-			outputDataInTable(pMassive);
+			sortStudentListByPriority(pMassive); // функция сортировки 
+			outputDataInTable(pMassive); 
 			cout << "\n-----------------------+" << endl;
 			cout << "| Минимальная зарплата |" << endl;
 			cout << "+----------------------" << endl;
@@ -162,7 +162,7 @@ void individualTaskMenu(short int choice, student*& pMassive) {
 			system("pause");
 			break;
 		case modeOfIndividualTask::input_minimal_salary:
-			inputMinimalSalary(pMassive);
+			inputMinimalSalary(pMassive); // функция ввода минимальной зарплаты
 			system("pause");
 			break;
 		case modeOfIndividualTask::close_individual_task_menu:
@@ -176,74 +176,84 @@ void individualTaskMenu(short int choice, student*& pMassive) {
 void editMenu(short int choice, student*& pMassive) {
 
 	int index = 0;
+	bool running = true;
 
-	formOfEditMode();
-
-	choice = inputNumber(isNumberRangeCorrectForEditMenu);
-
-	system("cls");
-
-	switch (choice)
-	{
-	case modeOfEditing::output_data:
-		outputMenu(pMassive);
-		break;
-	case modeOfEditing::add_student_info:
-		addStudentInList(pMassive);
-		system("pause");
-		break;
-	case modeOfEditing::delete_student_structer:
-		outputDataInTable(pMassive);
-		if (MASSIVE_SIZE == 0) break;
-		index = getNumberOfStudent();
-		deleteStudentElement(pMassive, index);
-		system("pause");
-		break;
-	case modeOfEditing::edit_student_info:
-		outputDataInTable(pMassive);
-		if (MASSIVE_SIZE == 0) break;
-		index = getNumberOfStudent();
+	while (running) {
 		system("cls");
-		editStudentElement(pMassive, index);
-		break;
-	case modeOfEditing::get_data_from_file:
-		getDataFromFile(pMassive);
-		system("pause");
-		break;
-	case modeOfEditing::record_data_in_file:
-		recordDatainFile(pMassive);
-		system("pause");
-		break;
-	case modeOfEditing::close_editing_menu:
+
+		formOfEditMode();
+
+		choice = inputNumber(isNumberRangeCorrectForEditMenu);
+
 		system("cls");
-		return;
+
+		switch (choice)
+		{
+		case modeOfEditing::output_data:
+			outputMenu(pMassive);  // вывод меню просмотра
+			break;
+		case modeOfEditing::add_student_info:
+			addStudentInList(pMassive); // функция добавления студента в список
+			system("pause");
+			break;
+		case modeOfEditing::delete_student_structer:
+			outputDataInTable(pMassive); // функция вывода списка на экран
+			if (MASSIVE_SIZE == 0) break; // проверка заполнености массива
+			index = getNumberOfStudent(); // получение индекса студента
+			system("cls");
+			deleteStudentElement(pMassive, index); // функция удаление
+			system("pause");
+			break;
+		case modeOfEditing::edit_student_info:
+			outputDataInTable(pMassive); // функция вывода списка на экран
+			if (MASSIVE_SIZE == 0) break;
+			index = getNumberOfStudent();  // получение индекса студента
+			system("cls");
+			editStudentElement(pMassive, index); // функция редактирования записи 
+			break;
+		case modeOfEditing::get_data_from_file:
+			getDataFromFile(pMassive); // функция записи структур из файла в массив
+			system("pause");
+			break;
+		case modeOfEditing::record_data_in_file:
+			recordDatainFile(pMassive); // функция сохранения данных в бинарный файл
+			inputInTextFile(pMassive); // функция сохранения данных в табличном виде в текстовый файл
+			system("pause");
+			break;
+		case modeOfEditing::close_editing_menu:
+			running = false;
+		}
 	}
-	system("cls");
 }
 // Режим обработки
 void processingMenu(short int choiceProcessingMode, short int choiceSearchMode, short int choiceSortMode, student*& pMassive) {
 
 	short int choiseModeOfIndTask = 0;
+	bool running = true;
 
-	formOfProcessingMenu(); // вывод меню обработки
+	while (running) {
+		system("cls");
+		formOfProcessingMenu(); // вывод меню обработки
 
-	choiceProcessingMode = inputNumber(isNumberRangeCorrectForProccesingMenu);
+		choiceProcessingMode = inputNumber(isNumberRangeCorrectForProccesingMenu);
 
-	system("cls");
+		system("cls");
 
-	switch (choiceProcessingMode)
-	{
-	case modeOfProcessing::search_student_info:
-		searchMenu(choiceSearchMode, pMassive);
-		break;
-	case modeOfProcessing::sort_menu:
-		sortMenu(choiceSortMode, pMassive);
-		break;
-	case modeOfProcessing::individual_task:
-		individualTaskMenu(choiseModeOfIndTask, pMassive);
-		break;
-	case modeOfProcessing::close_processing_mode:
-		return;
+		switch (choiceProcessingMode)
+		{
+		case modeOfProcessing::search_student_info:
+			searchMenu(choiceSearchMode, pMassive);
+			break;
+		case modeOfProcessing::sort_menu:
+			sortMenu(choiceSortMode, pMassive);
+			break;
+		case modeOfProcessing::individual_task:
+			individualTaskMenu(choiseModeOfIndTask, pMassive);
+			break;
+		case modeOfProcessing::close_processing_mode:
+			running = false;
+		}
 	}
+	
 }
 

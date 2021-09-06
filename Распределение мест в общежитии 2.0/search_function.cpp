@@ -21,21 +21,23 @@ void searchStudentByName(student* pMassive) {
 
 	// цикл для поиска индексов массива
 	for (int i = 0; i < MASSIVE_SIZE; i++) {
-		short int countOfSameLetters = 0;
+		short int countOfSameLetters = 0; // подсчет кол-во символов
 		for (int j = 0; j < 4; j++) {
 			if (nameOfStudent[j] == pMassive[i].studentName[j]) countOfSameLetters++;
 		}
-		if (countOfSameLetters == 4) {
+		if (countOfSameLetters == 4) { // условие нахождения слова
 			index.push_back(i);
 			flag = true;
 		}
 	}
 	cout << "Результат поиска: \n" << endl;
+	
+	// вывод результатов поиска в табличном виде
 	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
 	else {
-		cout << "+------------------------------------------------------------------------+" << endl;
-		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
-		cout << "+------------------------------------------------------------------------+" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. деятельность |" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
 
 		for (int i = 0; i < index.size(); i++) {
 			string socialActivity = "";
@@ -45,11 +47,12 @@ void searchStudentByName(student* pMassive) {
 
 			cout << "|" << setw(20) << pMassive[index[i]].studentName << "|";
 			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
-			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+------------------------------------------------------------------------+" << endl;
+			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(19) << socialActivity << "|" << endl;
+			cout << "+--------------------------------------------------------------------------+" << endl;
 		}
 	}
 }
+// поиск студента по номеру группы
 void searchStudentByGroup(student* pMassive) {
 
 	vector<int>index;
@@ -61,18 +64,19 @@ void searchStudentByGroup(student* pMassive) {
 	cin.getline(groupNumber, 30);
 
 	for (int i = 0; i < MASSIVE_SIZE; i++) {
-		if (strcmp(groupNumber, pMassive[i].groupNumber) == 0) {
-			index.push_back(i);
+		if (strcmp(groupNumber, pMassive[i].groupNumber) == 0) {  // сравниваем строки
+			index.push_back(i); // добавляем индекс в вектор
 			flag = true;
 		}
 	}
 
 	cout << "Результат поиска: \n" << endl;
+	// выводи результат поиска в табличном виде
 	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
 	else {
-		cout << "+------------------------------------------------------------------------+" << endl;
-		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
-		cout << "+------------------------------------------------------------------------+" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. деятельность |" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
 
 		for (int i = 0; i < index.size(); i++) {
 			string socialActivity = "";
@@ -82,12 +86,13 @@ void searchStudentByGroup(student* pMassive) {
 
 			cout << "|" << setw(20) << pMassive[index[i]].studentName << "|";
 			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
-			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+------------------------------------------------------------------------+" << endl;
+			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(19) << socialActivity << "|" << endl;
+			cout << "+--------------------------------------------------------------------------+" << endl;
 		}
 	}
 
 }
+// поиск по среднему баллу
 void searchStudentByAverageScore(student* pMassive) {
 
 	vector<int>index;
@@ -108,9 +113,9 @@ void searchStudentByAverageScore(student* pMassive) {
 	cout << "Результат поиска: \n" << endl;
 	if (flag == false)  cout << "Таких студентов нет в списке" << endl;
 	else {
-		cout << "+------------------------------------------------------------------------+" << endl;
-		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. активность |" << endl;
-		cout << "+------------------------------------------------------------------------+" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
+		cout << "|    Имя студента    | Номер группы | Ср. былл | Доход | Cоц. деятельность |" << endl;
+		cout << "+--------------------------------------------------------------------------+" << endl;
 
 		for (int i = 0; i < index.size(); i++) {
 			string socialActivity = "";
@@ -120,8 +125,8 @@ void searchStudentByAverageScore(student* pMassive) {
 
 			cout << "|" << setw(20) << pMassive[index[i]].studentName << "|";
 			cout << setw(14) << pMassive[index[i]].groupNumber << "|" << setw(10) << pMassive[index[i]].averageScore << "|";
-			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(17) << socialActivity << "|" << endl;
-			cout << "+------------------------------------------------------------------------+" << endl;
+			cout << setw(7) << pMassive[index[i]].income.netIncome << "|" << setw(19) << socialActivity << "|" << endl;
+			cout << "+--------------------------------------------------------------------------+" << endl;
 		}
 	}
 }

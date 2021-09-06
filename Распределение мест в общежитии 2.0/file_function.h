@@ -7,5 +7,5 @@ void getDataFromFile(student*&);
 int getCountOfStructerInFile();
 // запись всех структур в файл
 void recordDatainFile(student*);
-// запись структуры в конец файла
-void recordDataInEndOfFile(student*);
+
+void inputInTextFile(student*);

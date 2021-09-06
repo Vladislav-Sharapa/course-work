@@ -1,6 +1,5 @@
 #include<iostream>
-#include<fstream>
-#include<iomanip>
+#include<Windows.h>
 
 #include "userTypes.h"
 #include "form_of_menu.h"
@@ -14,6 +13,8 @@ unsigned int MINIMAL_SALARY = 0; // начальное значение минимальной зарплаты
 int main() {
 	
 	setlocale(0, "");
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
 
 	student* pMassive = NULL;  // указатель на динамический массив
 	bool running = true;
